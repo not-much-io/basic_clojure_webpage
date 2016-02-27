@@ -3,17 +3,21 @@
             [compojure.route :as route]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [basic-clojure-webpage.pages.home :refer [home-page]]
-            [basic-clojure-webpage.pages.add :refer [add-page]]
             [basic-clojure-webpage.db.quotes :as db]))
+
+(defn handle-post-to-home [params]
+  (let [id    (:id params)
+        quote (:quote params)]
+    (cond id    (db/delete-quote-with-id params)
+          quote (db/insert-quote params)
+          :else "Error!")))
 
 (defroutes app-routes
            (GET "/" []
              (home-page))
-           (GET "/add" []
-             (add-page))
-           (POST "/post-quote" {params :params}
+           (POST "/" {params :params}
              (do
-               (db/insert-quote db/db-spec params)
+               (handle-post-to-home params)
                (home-page)))
            (route/not-found "Not Found"))
 

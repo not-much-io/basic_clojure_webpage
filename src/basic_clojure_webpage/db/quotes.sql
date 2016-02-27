@@ -1,18 +1,18 @@
--- :name create-quote-table :!
+-- :name _create-quote-table :!
 CREATE TABLE IF NOT EXISTS quotes (
   id INTEGER PRIMARY KEY,
   quote TEXT
 );
 
--- :name insert-quote :! :n
+-- :name _insert-quote :! :n
 INSERT INTO quotes (quote)
 VALUES (:quote);
 
--- :name delete-quote-with-id :! :n
+-- :name _delete-quote-with-id :! :n
 DELETE FROM quotes WHERE id = :id;
 
--- :name drop-quotes-table :!
+-- :name _drop-quotes-table :!
 DROP TABLE IF EXISTS quotes;
 
--- :name get-quotes
+-- :name _get-quotes
 SELECT * FROM quotes;
